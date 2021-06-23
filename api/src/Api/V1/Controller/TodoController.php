@@ -4,6 +4,7 @@ namespace App\Api\V1\Controller;
 
 use App\Api\V1\Transformer\TodoTransformer;
 use App\Todo\Application\Command\CreateTodoCommand;
+use App\Todo\Application\Command\RemoveTodoCommand;
 use App\Todo\Application\Command\UpdateTodoCommand;
 use App\Todo\Application\Query\FindTodoQuery;
 use App\Todo\Application\Query\ListTodosQuery;
@@ -95,5 +96,17 @@ class TodoController
         $todo = new Item($commandResult, $this->todoTransformer, 'todo');
         $transformedTodo = $this->manager->createData($todo);
         return new JsonResponse($transformedTodo->toArray());
+    }
+
+    /**
+     * @Route  ("/api/v1/todos/{id}", methods={"DELETE"})
+     */
+    public function remove(int $id, MessageBusInterface $commandBus)
+    {
+        $removeTodoCommand = new RemoveTodoCommand($id);
+        $commandBus->dispatch($removeTodoCommand);
+        $response = new JsonResponse();
+        $response->setStatusCode(204);
+        return $response;
     }
 }

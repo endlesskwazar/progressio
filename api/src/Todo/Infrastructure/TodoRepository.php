@@ -58,4 +58,18 @@ class TodoRepository extends ServiceEntityRepository implements TodoRepositoryIn
 
         return $todoToUpdate;
     }
+
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
+    public function remove($id): void
+    {
+        $em = $this->getEntityManager();
+
+        $todoToRemove = $this->findById($id);
+
+        $em->remove($todoToRemove);
+        $em->flush();
+    }
 }
