@@ -2,16 +2,18 @@
 
 namespace App\Todo\Application\Command;
 
-/**
- * Create new project.
- *
- * @property string $name Todo name
- */
+use Symfony\Component\Validator\Constraints as Assert;
+
 class CreateTodoCommand
 {
     /**
-     * @Constraints\NotBlank()
-     * @Constraints\Length(max = "255")
+     * @Assert\NotBlank
+     * @Assert\Length(max = 255)
      */
     public string $title;
+
+    public function __construct(string $title)
+    {
+        $this->title = $title;
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Api\V1\Controller;
 
 use App\Api\V1\Transformer\TodoTransformer;
+use App\Todo\Application\Command\CreateTodoCommand;
 use App\Todo\Application\Query\FindTodoQuery;
 use App\Todo\Application\Query\ListTodosQuery;
 use League\Fractal\Resource\Item;
@@ -26,7 +27,7 @@ class TodoController
     }
 
     /**
-     * @Route ("/api/v1/todos", methods={"GET"})
+     * @Route  ("/api/v1/todos", methods={"GET"})
      * @param MessageBusInterface $queryBus
      * @return JsonResponse
      */
@@ -41,9 +42,10 @@ class TodoController
         return new JsonResponse($transformedTodos->toArray());
     }
 
+
     /**
-     * @Route ("/api/v1/todos/{id}", methods={"GET"})
-     * @param int $id
+     * @Route  ("/api/v1/todos/{id}", methods={"GET"})
+     * @param integer $id
      * @param MessageBusInterface $queryBus
      * @return JsonResponse
      */
@@ -58,8 +60,21 @@ class TodoController
         return new JsonResponse($transformedTodo->toArray());
     }
 
-    public function create(Request $request)
+    /**
+     * @Route  ("/api/v1/todos", methods={"POST"})
+     */
+    public function create(Request $request, MessageBusInterface $commandBus): JsonResponse
     {
+        $data = $request->request->all();
 
+        $createCommand = new CreateTodoCommand($data['title']);
+
+        $envelope = $commandBus->dispatch($createCommand);
+        $handledStamp = $envelope->last(HandledStamp::class);
+        $commandResult = $handledStamp->getResult();
+
+        $todo = new Item($commandResult, $this->todoTransformer, 'todo');
+        $transformedTodo = $this->manager->createData($todo);
+        return new JsonResponse($transformedTodo->toArray());
     }
 }
