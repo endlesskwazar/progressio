@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\InheritanceType;
 /**
  * @ORM\Entity
  * @ORM\Table(name="todos")
- * @InheritanceType("SINGLE_TABLE")
+ * @InheritanceType("JOINED")
  * @DiscriminatorColumn(name="type", type="string")
  * @DiscriminatorMap({"book" = "BookTodo", "media" = "MediaTodo", "course" = "CourseTodo"})
  * @ORM\HasLifecycleCallbacks

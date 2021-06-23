@@ -12,17 +12,17 @@ class BookTodo extends Todo
     /**
      * @ORM\Column(type="integer", nullable = true)
      */
-    private ?int $pages;
+    private ?int $pages = null;
 
     /**
      * @ORM\Column(type="integer", nullable = true)
      */
-    private ?int $page;
+    private ?int $page = null;
 
     /**
      * @ORM\Column(type="string", nullable = true, length=300)
      */
-    private ?string $author;
+    private ?string $author = null;
 
     public function getPages(): ?int
     {

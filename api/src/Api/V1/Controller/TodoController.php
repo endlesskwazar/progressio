@@ -3,11 +3,9 @@
 namespace App\Api\V1\Controller;
 
 use App\Api\V1\Transformer\TodoTransformer;
-use App\Todo\Application\Book\CreateBookCommand;
+use App\Shared\Infrastructure\Factory\CreateTodoCommandFactory;
 use App\Todo\Application\Command\RemoveTodoCommand;
 use App\Todo\Application\Command\UpdateTodoCommand;
-use App\Todo\Application\Course\CreateCourseCommand;
-use App\Todo\Application\Media\CreateMediaCommand;
 use App\Todo\Application\Query\FindTodoQuery;
 use App\Todo\Application\Query\ListTodosQuery;
 use League\Fractal\Resource\Item;
@@ -67,45 +65,12 @@ class TodoController
     /**
      * @Route  ("/api/v1/todos", methods={"POST"})
      */
-    public function create(Request $request, MessageBusInterface $commandBus): JsonResponse
-    {
-        $type = $request->get('type');
-
-        $command = null;
-
-        if ($type === 'book') {
-            $command = new CreateBookCommand(
-                $request->get('title'),
-                $request->get('body'),
-                $request->get('due'),
-                $request->get('done'),
-                $request->get('pages'),
-                $request->get('page'),
-                $request->get('author'),
-            );
-        }
-
-        if ($type === 'media') {
-            $command = new CreateMediaCommand(
-                $request->get('title'),
-                $request->get('body'),
-                $request->get('due'),
-                $request->get('done'),
-                $request->get('duration'),
-                $request->get('pause'),
-            );
-        }
-
-        if ($type === 'course') {
-            $command = new CreateCourseCommand(
-                $request->get('title'),
-                $request->get('body'),
-                $request->get('due'),
-                $request->get('done'),
-                $request->get('steps'),
-                $request->get('step'),
-            );
-        }
+    public function create(
+        Request $request,
+        MessageBusInterface $commandBus,
+        CreateTodoCommandFactory $commandFactory
+    ): JsonResponse {
+        $command = $commandFactory::createCommand($request);
 
         $envelope = $commandBus->dispatch($command);
         $handledStamp = $envelope->last(HandledStamp::class);
