@@ -4,9 +4,9 @@ namespace App\Api\V1\Controller;
 
 use App\Api\V1\Transformer\TodoTransformer;
 use App\Todo\Application\Book\CreateBookCommand;
-use App\Todo\Application\Command\CreateTodoCommand;
 use App\Todo\Application\Command\RemoveTodoCommand;
 use App\Todo\Application\Command\UpdateTodoCommand;
+use App\Todo\Application\Course\CreateCourseCommand;
 use App\Todo\Application\Media\CreateMediaCommand;
 use App\Todo\Application\Query\FindTodoQuery;
 use App\Todo\Application\Query\ListTodosQuery;
@@ -93,6 +93,17 @@ class TodoController
                 $request->get('done'),
                 $request->get('duration'),
                 $request->get('pause'),
+            );
+        }
+
+        if ($type === 'course') {
+            $command = new CreateCourseCommand(
+                $request->get('title'),
+                $request->get('body'),
+                $request->get('due'),
+                $request->get('done'),
+                $request->get('steps'),
+                $request->get('step'),
             );
         }
 
