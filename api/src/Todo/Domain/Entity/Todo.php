@@ -4,13 +4,19 @@ namespace App\Todo\Domain\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+use Doctrine\ORM\Mapping\InheritanceType;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="todos")
+ * @InheritanceType("SINGLE_TABLE")
+ * @DiscriminatorColumn(name="type", type="string")
+ * @DiscriminatorMap({"book" = "BookTodo"})
  * @ORM\HasLifecycleCallbacks
  */
-class Todo
+abstract class Todo
 {
     /**
      * @ORM\Id()
@@ -34,17 +40,17 @@ class Todo
     /**
      * @ORM\Column(type="datetime", nullable = true)
      */
-    private ?datetime $updated;
+    private ?datetime $updated = null;
 
     /**
      * @ORM\Column(type="datetime", nullable = true)
      */
-    private ?datetime $due;
+    private ?datetime $due = null;
 
     /**
      * @ORM\Column(type="string",  nullable = true, length=8000)
      */
-    private ?string $body;
+    private ?string $body = null;
 
     /**
      * @ORM\Column(type="boolean", length=8000)

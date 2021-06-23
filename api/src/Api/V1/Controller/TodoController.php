@@ -3,6 +3,7 @@
 namespace App\Api\V1\Controller;
 
 use App\Api\V1\Transformer\TodoTransformer;
+use App\Todo\Application\Book\CreateBookCommand;
 use App\Todo\Application\Command\CreateTodoCommand;
 use App\Todo\Application\Command\RemoveTodoCommand;
 use App\Todo\Application\Command\UpdateTodoCommand;
@@ -67,11 +68,14 @@ class TodoController
      */
     public function create(Request $request, MessageBusInterface $commandBus): JsonResponse
     {
-        $createCommand = new CreateTodoCommand(
+        $createCommand = new CreateBookCommand(
             $request->get('title'),
             $request->get('body'),
             $request->get('due'),
-            $request->get('done')
+            $request->get('done'),
+            $request->get('pages'),
+            $request->get('page'),
+            $request->get('author'),
         );
 
         $envelope = $commandBus->dispatch($createCommand);
