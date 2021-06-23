@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping\InheritanceType;
  * @ORM\Table(name="todos")
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="type", type="string")
- * @DiscriminatorMap({"book" = "BookTodo"})
+ * @DiscriminatorMap({"book" = "BookTodo", "media" = "MediaTodo", "course" = "CourseTodo"})
  * @ORM\HasLifecycleCallbacks
  */
 abstract class Todo

@@ -7,6 +7,7 @@ use App\Todo\Application\Book\CreateBookCommand;
 use App\Todo\Application\Command\CreateTodoCommand;
 use App\Todo\Application\Command\RemoveTodoCommand;
 use App\Todo\Application\Command\UpdateTodoCommand;
+use App\Todo\Application\Media\CreateMediaCommand;
 use App\Todo\Application\Query\FindTodoQuery;
 use App\Todo\Application\Query\ListTodosQuery;
 use League\Fractal\Resource\Item;
@@ -68,17 +69,34 @@ class TodoController
      */
     public function create(Request $request, MessageBusInterface $commandBus): JsonResponse
     {
-        $createCommand = new CreateBookCommand(
-            $request->get('title'),
-            $request->get('body'),
-            $request->get('due'),
-            $request->get('done'),
-            $request->get('pages'),
-            $request->get('page'),
-            $request->get('author'),
-        );
+        $type = $request->get('type');
 
-        $envelope = $commandBus->dispatch($createCommand);
+        $command = null;
+
+        if ($type === 'book') {
+            $command = new CreateBookCommand(
+                $request->get('title'),
+                $request->get('body'),
+                $request->get('due'),
+                $request->get('done'),
+                $request->get('pages'),
+                $request->get('page'),
+                $request->get('author'),
+            );
+        }
+
+        if ($type === 'media') {
+            $command = new CreateMediaCommand(
+                $request->get('title'),
+                $request->get('body'),
+                $request->get('due'),
+                $request->get('done'),
+                $request->get('duration'),
+                $request->get('pause'),
+            );
+        }
+
+        $envelope = $commandBus->dispatch($command);
         $handledStamp = $envelope->last(HandledStamp::class);
         $commandResult = $handledStamp->getResult();
 
