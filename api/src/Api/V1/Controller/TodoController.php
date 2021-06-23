@@ -87,7 +87,7 @@ class TodoController
     {
         $data = $request->request->all();
 
-        $updateTodoCommand = new UpdateTodoCommand((int)$id, $data['title']);
+        $updateTodoCommand = new UpdateTodoCommand($id, $data['title']);
 
         $envelope = $commandBus->dispatch($updateTodoCommand);
         $handledStamp = $envelope->last(HandledStamp::class);

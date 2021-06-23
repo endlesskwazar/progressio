@@ -4,7 +4,6 @@ namespace App\Todo\Application\Command;
 
 use App\Todo\Domain\Contracts\TodoRepositoryInterface;
 use App\Todo\Domain\Entity\Todo;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -27,13 +26,6 @@ class CreateTodoCommandHandler implements MessageHandlerInterface
      */
     public function __invoke(CreateTodoCommand $command): Todo
     {
-        $violations = $this->validator->validate($command);
-
-        if (count($violations) !== 0) {
-            $error = $violations->get(0)->getMessage();
-            throw new BadRequestHttpException($error);
-        }
-
         $todo = new Todo();
         $todo->setTitle($command->title);
 
