@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Middleware;
+namespace App\Shared\Infrastructure\Http;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class JsonBodyMiddleware implements EventSubscriberInterface
+class JsonBodyEventSubscriber implements EventSubscriberInterface
 {
     public function onKernelRequest(RequestEvent $requestEvent)
     {

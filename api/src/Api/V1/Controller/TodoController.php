@@ -67,9 +67,12 @@ class TodoController
      */
     public function create(Request $request, MessageBusInterface $commandBus): JsonResponse
     {
-        $data = $request->request->all();
-
-        $createCommand = new CreateTodoCommand($data['title']);
+        $createCommand = new CreateTodoCommand(
+            $request->get('title'),
+            $request->get('body'),
+            $request->get('due'),
+            $request->get('done')
+        );
 
         $envelope = $commandBus->dispatch($createCommand);
         $handledStamp = $envelope->last(HandledStamp::class);
@@ -101,7 +104,7 @@ class TodoController
     /**
      * @Route  ("/api/v1/todos/{id}", methods={"DELETE"})
      */
-    public function remove(int $id, MessageBusInterface $commandBus)
+    public function remove(int $id, MessageBusInterface $commandBus): JsonResponse
     {
         $removeTodoCommand = new RemoveTodoCommand($id);
         $commandBus->dispatch($removeTodoCommand);

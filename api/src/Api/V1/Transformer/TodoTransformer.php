@@ -10,8 +10,13 @@ class TodoTransformer extends TransformerAbstract
     public function transform(Todo $todo): array
     {
         return [
-            'id'      => $todo->getId(),
-            'title'   => $todo->getTitle(),
+            'id' => $todo->getId(),
+            'title' => $todo->getTitle(),
+            'done' => $todo->getDone(),
+            'body' => $todo->getBody(),
+            'due' => $todo->getDue(),
+            'created' => $todo->getCreated(),
+            'updated' => $todo->getUpdated()
         ];
     }
 }

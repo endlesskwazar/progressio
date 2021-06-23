@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Todo\Application\Command;
+namespace App\Todo\Application\CommandHandler;
 
+use App\Todo\Application\Command\UpdateTodoCommand;
 use App\Todo\Domain\Contracts\TodoRepositoryInterface;
 use App\Todo\Domain\Entity\Todo;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
