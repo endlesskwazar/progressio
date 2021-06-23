@@ -9,4 +9,5 @@ interface TodoRepositoryInterface
     public function findAll();
     public function findById(int $id): object;
     public function create(Todo $todo): Todo;
+    public function update(Todo $todo): object;
 }

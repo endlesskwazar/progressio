@@ -4,6 +4,7 @@ namespace App\Api\V1\Controller;
 
 use App\Api\V1\Transformer\TodoTransformer;
 use App\Todo\Application\Command\CreateTodoCommand;
+use App\Todo\Application\Command\UpdateTodoCommand;
 use App\Todo\Application\Query\FindTodoQuery;
 use App\Todo\Application\Query\ListTodosQuery;
 use League\Fractal\Resource\Item;
@@ -70,6 +71,24 @@ class TodoController
         $createCommand = new CreateTodoCommand($data['title']);
 
         $envelope = $commandBus->dispatch($createCommand);
+        $handledStamp = $envelope->last(HandledStamp::class);
+        $commandResult = $handledStamp->getResult();
+
+        $todo = new Item($commandResult, $this->todoTransformer, 'todo');
+        $transformedTodo = $this->manager->createData($todo);
+        return new JsonResponse($transformedTodo->toArray());
+    }
+
+    /**
+     * @Route  ("/api/v1/todos/{id}", methods={"PUT"})
+     */
+    public function update(int $id, Request $request, MessageBusInterface $commandBus): JsonResponse
+    {
+        $data = $request->request->all();
+
+        $updateTodoCommand = new UpdateTodoCommand((int)$id, $data['title']);
+
+        $envelope = $commandBus->dispatch($updateTodoCommand);
         $handledStamp = $envelope->last(HandledStamp::class);
         $commandResult = $handledStamp->getResult();
 
