@@ -3,6 +3,7 @@
 namespace App\Todo\Application\Todo\QueryHandler;
 
 use App\Todo\Application\Query\FindTodoQuery;
+use App\Todo\Domain\Entity\Todo;
 use App\Todo\Infrastructure\TodoRepository;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
@@ -15,8 +16,11 @@ class FindTodoQueryHandler implements MessageHandlerInterface
         $this->todoRepository = $todoRepository;
     }
 
-    public function __invoke(FindTodoQuery $query): object
+    public function __invoke(FindTodoQuery $query): Todo
     {
-        return $this->todoRepository->findById($query->id);
+        /** @var Todo $todo */
+        $todo = $this->todoRepository->findById($query->id);
+
+        return $todo;
     }
 }

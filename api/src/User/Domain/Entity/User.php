@@ -9,7 +9,6 @@ use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
  * @ORM\Entity
  * @ORM\Table(name="users")
  * @ORM\HasLifecycleCallbacks
- * @method string getUserIdentifier()
  */
 class User implements JWTUserInterface
 {
@@ -95,13 +94,13 @@ class User implements JWTUserInterface
         // TODO: Implement eraseCredentials() method.
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->name;
     }
 
-    public function __call($name, $arguments)
+    public function getUserIdentifier(): string
     {
-        // TODO: Implement @method string getUserIdentifier()
+        return $this->email;
     }
 }

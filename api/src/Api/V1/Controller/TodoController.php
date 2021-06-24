@@ -3,7 +3,7 @@
 namespace App\Api\V1\Controller;
 
 use App\Api\V1\Transformer\TodoTransformer;
-use App\Shared\Infrastructure\Factory\CreateTodoCommandFactory;
+use App\Todo\Application\Todo\Command\CreateTodoCommandStrategy;
 use App\Todo\Application\Todo\Command\RemoveTodoCommand;
 use App\Todo\Application\Todo\Command\UpdateTodoCommand;
 use App\Todo\Application\Query\FindTodoQuery;
@@ -68,9 +68,10 @@ class TodoController
     public function create(
         Request $request,
         MessageBusInterface $commandBus,
-        CreateTodoCommandFactory $commandFactory
+        CreateTodoCommandStrategy $createTodoCommandStrategy
     ): JsonResponse {
-        $command = $commandFactory::createCommandFromRequest($request);
+
+        $command = $createTodoCommandStrategy->getCommandFromRequest($request);
 
         $envelope = $commandBus->dispatch($command);
         $handledStamp = $envelope->last(HandledStamp::class);

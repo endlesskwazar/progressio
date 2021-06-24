@@ -146,9 +146,4 @@ abstract class Todo
     {
         $this->done = $done;
     }
-
-    public function getType(): string
-    {
-        return $this->type;
-    }
 }
