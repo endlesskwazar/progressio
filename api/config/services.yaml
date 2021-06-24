@@ -26,6 +26,11 @@ services:
         bind:
             $queryBus: '@query.bus'
 
+    App\Api\V1\Controller\UserController:
+        tags: [ controller.service_arguments ]
+        bind:
+            $commandBus: '@command.bus'
+
     League\Fractal\Manager: ~
     # for any $projectDir argument, pass this parameter value
     # add more service definitions when explicit configuration is needed
