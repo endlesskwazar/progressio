@@ -2,14 +2,14 @@
 
 namespace App\Shared\Infrastructure\Factory;
 
-use App\Todo\Application\Book\CreateBookCommand;
-use App\Todo\Application\Course\CreateCourseCommand;
-use App\Todo\Application\Media\CreateMediaCommand;
+use App\Todo\Application\Book\Command\CreateBookCommand;
+use App\Todo\Application\Course\Command\CreateCourseCommand;
+use App\Todo\Application\Media\Command\CreateMediaCommand;
 use Symfony\Component\HttpFoundation\Request;
 
 class CreateTodoCommandFactory
 {
-    public static function createCommand(Request $request)
+    public static function createCommandFromRequest(Request $request)
     {
         $type = $request->get('type');
         $command = null;

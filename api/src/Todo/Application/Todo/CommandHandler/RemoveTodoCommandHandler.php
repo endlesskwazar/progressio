@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Todo\Application\CommandHandler;
+namespace App\Todo\Application\Todo\CommandHandler;
 
-use App\Todo\Application\Command\RemoveTodoCommand;
+use App\Todo\Application\Todo\Command\RemoveTodoCommand;
 use App\Todo\Domain\Contracts\TodoRepositoryInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 

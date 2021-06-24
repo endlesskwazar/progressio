@@ -4,10 +4,10 @@ namespace App\Api\V1\Controller;
 
 use App\Api\V1\Transformer\TodoTransformer;
 use App\Shared\Infrastructure\Factory\CreateTodoCommandFactory;
-use App\Todo\Application\Command\RemoveTodoCommand;
-use App\Todo\Application\Command\UpdateTodoCommand;
+use App\Todo\Application\Todo\Command\RemoveTodoCommand;
+use App\Todo\Application\Todo\Command\UpdateTodoCommand;
 use App\Todo\Application\Query\FindTodoQuery;
-use App\Todo\Application\Query\ListTodosQuery;
+use App\Todo\Application\Todo\Query\ListTodosQuery;
 use League\Fractal\Resource\Item;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,7 +70,7 @@ class TodoController
         MessageBusInterface $commandBus,
         CreateTodoCommandFactory $commandFactory
     ): JsonResponse {
-        $command = $commandFactory::createCommand($request);
+        $command = $commandFactory::createCommandFromRequest($request);
 
         $envelope = $commandBus->dispatch($command);
         $handledStamp = $envelope->last(HandledStamp::class);

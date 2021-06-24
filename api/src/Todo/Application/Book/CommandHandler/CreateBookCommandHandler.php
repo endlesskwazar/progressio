@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Todo\Application\Book;
+namespace App\Todo\Application\Book\CommandHandler;
 
+use App\Todo\Application\Book\Command\CreateBookCommand;
 use App\Todo\Domain\Contracts\TodoRepositoryInterface;
 use App\Todo\Domain\Entity\BookTodo;
+use App\Todo\Domain\Entity\Todo;
 use DateTime;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
@@ -16,7 +18,7 @@ class CreateBookCommandHandler implements MessageHandlerInterface
         $this->todoRepository = $todoRepository;
     }
 
-    public function __invoke(CreateBookCommand $command): BookTodo
+    public function __invoke(CreateBookCommand $command): Todo
     {
         $bookTodo = new BookTodo();
         $bookTodo->setTitle($command->title);

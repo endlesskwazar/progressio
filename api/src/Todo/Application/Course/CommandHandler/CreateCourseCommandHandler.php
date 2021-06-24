@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Todo\Application\Media;
+namespace App\Todo\Application\Course\CommandHandler;
 
+use App\Todo\Application\Course\Command\CreateCourseCommand;
 use App\Todo\Domain\Contracts\TodoRepositoryInterface;
-use App\Todo\Domain\Entity\MediaTodo;
+use App\Todo\Domain\Entity\CourseTodo;
 use App\Todo\Domain\Entity\Todo;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class CreateMediaCommandHandler implements MessageHandlerInterface
+class CreateCourseCommandHandler implements MessageHandlerInterface
 {
     private TodoRepositoryInterface $todoRepository;
 
@@ -16,9 +17,9 @@ class CreateMediaCommandHandler implements MessageHandlerInterface
         $this->todoRepository = $todoRepository;
     }
 
-    public function __invoke(CreateMediaCommand $command): Todo
+    public function __invoke(CreateCourseCommand $command): Todo
     {
-        $todo = new MediaTodo();
+        $todo = new CourseTodo();
         $todo->setTitle($command->title);
 
         if ($command->body) {
@@ -34,12 +35,12 @@ class CreateMediaCommandHandler implements MessageHandlerInterface
             $todo->setDue($dueDate);
         }
 
-        if ($command->duration) {
-            $todo->setPages($command->pages);
+        if ($command->steps) {
+            $todo->setPages($command->steps);
         }
 
-        if ($command->pause) {
-            $todo->setPage($command->page);
+        if ($command->step) {
+            $todo->setPage($command->step);
         }
 
         return $this->todoRepository->create($todo);

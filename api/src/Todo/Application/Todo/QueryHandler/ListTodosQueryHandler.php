@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Todo\Application\QueryHandler;
+namespace App\Todo\Application\Todo\QueryHandler;
 
-use App\Todo\Application\Query\ListTodosQuery;
+use App\Todo\Application\Todo\Query\ListTodosQuery;
 use App\Todo\Infrastructure\TodoRepository;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 

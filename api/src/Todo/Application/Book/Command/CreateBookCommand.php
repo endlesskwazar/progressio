@@ -1,29 +1,32 @@
 <?php
 
-namespace App\Todo\Application\Media;
+namespace App\Todo\Application\Book\Command;
 
-class CreateMediaCommand
+class CreateBookCommand
 {
     public string $title;
     public ?string $body;
     public ?string $due;
     public ?bool $done;
-    public ?string $duration;
-    public ?string $pause;
+    public ?int $pages;
+    public ?int $page;
+    public ?string $author;
 
     public function __construct(
         string $title,
         ?string $body,
         ?string $due,
         ?bool $done,
-        ?string $duration,
-        ?string $pause
+        ?int $pages,
+        ?int $page,
+        ?string $author
     ) {
         $this->title = $title;
         $this->body = $body;
         $this->due = $due;
         $this->done = $done;
-        $this->duration = $duration;
-        $this->pause = $pause;
+        $this->pages = $pages;
+        $this->page = $page;
+        $this->author = $author;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Todo\Application\Command;
+namespace App\Todo\Application\Todo\Command;
 
 class RemoveTodoCommand
 {

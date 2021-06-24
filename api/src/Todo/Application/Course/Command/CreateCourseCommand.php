@@ -1,32 +1,29 @@
 <?php
 
-namespace App\Todo\Application\Book;
+namespace App\Todo\Application\Course\Command;
 
-class CreateBookCommand
+class CreateCourseCommand
 {
     public string $title;
     public ?string $body;
     public ?string $due;
     public ?bool $done;
-    public ?int $pages;
-    public ?int $page;
-    public ?string $author;
+    public ?int $steps;
+    public ?int $step;
 
     public function __construct(
         string $title,
         ?string $body,
         ?string $due,
         ?bool $done,
-        ?int $pages,
-        ?int $page,
-        ?string $author
+        ?int $steps,
+        ?int $step
     ) {
         $this->title = $title;
         $this->body = $body;
         $this->due = $due;
         $this->done = $done;
-        $this->pages = $pages;
-        $this->page = $page;
-        $this->author = $author;
+        $this->steps = $steps;
+        $this->step = $step;
     }
 }
