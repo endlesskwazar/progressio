@@ -3,13 +3,15 @@
 namespace App\User\Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
  * @ORM\HasLifecycleCallbacks
+ * @method string getUserIdentifier()
  */
-class User
+class User implements JWTUserInterface
 {
     /**
      * @ORM\Id()
@@ -71,5 +73,35 @@ class User
     public function setPassword(string $password): void
     {
         $this->password = $password;
+    }
+
+    public static function createFromPayload($username, array $payload)
+    {
+        // TODO: Implement createFromPayload() method.
+    }
+
+    public function getRoles(): array
+    {
+        return [];
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUsername()
+    {
+        return $this->name;
+    }
+
+    public function __call($name, $arguments)
+    {
+        // TODO: Implement @method string getUserIdentifier()
     }
 }

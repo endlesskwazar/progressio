@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController
 {
     /**
-     * @Route  ("/api/v1/users/register", methods={"POST"})
+     * @Route  ("/api/register", methods={"POST"})
      */
     public function create(Request $request, MessageBusInterface $commandBus)
     {
