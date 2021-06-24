@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Todo\Application\QueryHandler;
+namespace App\Todo\Application\Todo\QueryHandler;
 
 use App\Todo\Application\Query\FindTodoQuery;
 use App\Todo\Infrastructure\TodoRepository;
