@@ -2,8 +2,8 @@
 
 namespace App\Api\V1\Controller;
 
+use App\Api\V1\TodoStrategy\CreateTodoCommandStrategy;
 use App\Api\V1\Transformer\TodoTransformer;
-use App\Todo\Application\Todo\Command\CreateTodoCommandStrategy;
 use App\Todo\Application\Todo\Command\RemoveTodoCommand;
 use App\Todo\Application\Todo\Command\UpdateTodoCommand;
 use App\Todo\Application\Query\FindTodoQuery;
@@ -70,7 +70,6 @@ class TodoController
         MessageBusInterface $commandBus,
         CreateTodoCommandStrategy $createTodoCommandStrategy
     ): JsonResponse {
-
         $command = $createTodoCommandStrategy->getCommandFromRequest($request);
 
         $envelope = $commandBus->dispatch($command);

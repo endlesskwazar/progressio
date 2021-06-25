@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Todo\Application\Todo\Command\Contract;
+namespace App\Api\V1\TodoStrategy;
 
 use Symfony\Component\HttpFoundation\Request;
 

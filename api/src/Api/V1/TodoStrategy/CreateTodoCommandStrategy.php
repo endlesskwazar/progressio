@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Todo\Application\Todo\Command;
+namespace App\Api\V1\TodoStrategy;
 
-use App\Todo\Application\Todo\Command\Contract\CreateTodoStrategyInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CreateTodoCommandStrategy
@@ -17,7 +16,7 @@ class CreateTodoCommandStrategy
         $this->strategies[] = $strategy;
     }
 
-    public function getCommandFromRequest(Request $request)
+    public function getCommandFromRequest(Request $request): ?object
     {
         $type = $request->get('type');
         $command = null;

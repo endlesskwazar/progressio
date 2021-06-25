@@ -37,12 +37,12 @@ services:
 
     League\Fractal\Manager: ~
 
-    App\Todo\Application\Command\CreateBookTodoStrategy: ~
-    App\Todo\Application\Command\CreateCourseTodoStrategy: ~
-    App\Todo\Application\Command\CreateMediaTodoStrategy: ~
+    App\Api\V1\TodoStrategy\CreateBookTodoStrategy: ~
+    App\Api\V1\TodoStrategy\CreateCourseTodoStrategy: ~
+    App\Api\V1\TodoStrategy\CreateMediaTodoStrategy: ~
 
-    App\Todo\Application\Todo\Command\CreateTodoCommandStrategy:
+    App\Api\V1\TodoStrategy\CreateTodoCommandStrategy:
         calls:
-            - addStrategy: ['@App\Todo\Application\Todo\Command\CreateBookTodoStrategy']
-            - addStrategy: ['@App\Todo\Application\Todo\Command\CreateCourseTodoStrategy']
-            - addStrategy: ['@App\Todo\Application\Todo\Command\CreateMediaTodoStrategy']
+            - addStrategy: ['@App\Api\V1\TodoStrategy\CreateBookTodoStrategy']
+            - addStrategy: ['@App\Api\V1\TodoStrategy\CreateCourseTodoStrategy']
+            - addStrategy: ['@App\Api\V1\TodoStrategy\CreateMediaTodoStrategy']

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Todo\Application\Todo\Command;
+namespace App\Api\V1\TodoStrategy;
 
 use App\Todo\Application\Book\Command\CreateBookCommand;
-use App\Todo\Application\Todo\Command\Contract\CreateTodoStrategyInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CreateBookTodoStrategy implements CreateTodoStrategyInterface

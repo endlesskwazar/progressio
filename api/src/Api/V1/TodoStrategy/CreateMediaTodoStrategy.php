@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Todo\Application\Todo\Command;
+namespace App\Api\V1\TodoStrategy;
 
 use App\Todo\Application\Media\Command\CreateMediaCommand;
-use App\Todo\Application\Todo\Command\Contract\CreateTodoStrategyInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CreateMediaTodoStrategy implements CreateTodoStrategyInterface
