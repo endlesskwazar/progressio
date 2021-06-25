@@ -6,6 +6,12 @@ use App\Todo\Application\Course\Command\CreateCourseCommand;
 use App\Todo\Domain\Contracts\TodoRepositoryInterface;
 use App\Todo\Domain\Entity\CourseTodo;
 use App\Todo\Domain\Entity\Todo;
+use AutoMapperPlus\AutoMapper;
+use AutoMapperPlus\Configuration\AutoMapperConfig;
+use AutoMapperPlus\Configuration\Options;
+use AutoMapperPlus\MappingOperation\Operation;
+use AutoMapperPlus\NameConverter\NamingConvention\CamelCaseNamingConvention;
+use AutoMapperPlus\NameConverter\NamingConvention\SnakeCaseNamingConvention;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class CreateCourseCommandHandler implements MessageHandlerInterface
@@ -19,29 +25,19 @@ class CreateCourseCommandHandler implements MessageHandlerInterface
 
     public function __invoke(CreateCourseCommand $command): Todo
     {
-        $todo = new CourseTodo();
-        $todo->setTitle($command->title);
+        $config = new AutoMapperConfig();
+        $config->registerMapping(CreateCourseCommand::class, CourseTodo::class)
+            ->forMember('id', Operation::ignore())
+            ->setDefaults(function (Options $options) {
+                $options->ignoreNullProperties();
+            })
+            ->withNamingConventions(
+                new CamelCaseNamingConvention(),
+                new SnakeCaseNamingConvention()
+            );
 
-        if ($command->body) {
-            $todo->setBody($command->body);
-        }
-
-        if ($command->done !== null) {
-            $todo->setDone($command->done);
-        }
-
-        if ($command->due) {
-            $dueDate = DateTime::createFromFormat('Y-m-d H:i:s', $command->due);
-            $todo->setDue($dueDate);
-        }
-
-        if ($command->steps) {
-            $todo->setPages($command->steps);
-        }
-
-        if ($command->step) {
-            $todo->setPage($command->step);
-        }
+        $mapper = new AutoMapper($config);
+        $todo = $mapper->map($command, CourseTodo::class);
 
         return $this->todoRepository->create($todo);
     }
