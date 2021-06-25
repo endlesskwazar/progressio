@@ -5,12 +5,12 @@ namespace App\Todo\Application\Book\Command;
 class CreateBookCommand
 {
     public string $title;
-    public ?string $body;
-    public ?string $due;
-    public ?bool $done;
-    public ?int $pages;
-    public ?int $page;
-    public ?string $author;
+    public ?string $body = null;
+    public ?string $due = null;
+    public ?bool $done = null;
+    public ?int $pages = null;
+    public ?int $page = null;
+    public ?string $author = null;
 
     public function __construct(
         string $title,

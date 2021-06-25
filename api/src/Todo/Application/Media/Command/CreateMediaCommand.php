@@ -5,11 +5,11 @@ namespace App\Todo\Application\Media\Command;
 class CreateMediaCommand
 {
     public string $title;
-    public ?string $body;
-    public ?string $due;
-    public ?bool $done;
-    public ?string $duration;
-    public ?string $pause;
+    public ?string $body = null;
+    public ?string $due = null;
+    public ?bool $done = null;
+    public ?string $duration = null;
+    public ?string $pause = null;
 
     public function __construct(
         string $title,

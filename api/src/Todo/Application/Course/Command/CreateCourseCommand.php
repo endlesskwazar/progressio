@@ -5,11 +5,11 @@ namespace App\Todo\Application\Course\Command;
 class CreateCourseCommand
 {
     public string $title;
-    public ?string $body;
-    public ?string $due;
-    public ?bool $done;
-    public ?int $steps;
-    public ?int $step;
+    public ?string $body = null;
+    public ?string $due = null;
+    public ?bool $done = null;
+    public ?int $steps = null;
+    public ?int $step = null;
 
     public function __construct(
         string $title,
