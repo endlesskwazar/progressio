@@ -4,72 +4,52 @@ namespace App\Todo\Infrastructure;
 
 use App\Todo\Domain\Contracts\TodoRepositoryInterface;
 use App\Todo\Domain\Entity\Todo;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
-class TodoRepository extends ServiceEntityRepository implements TodoRepositoryInterface
+class TodoRepository implements TodoRepositoryInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct($registry, Todo::class);
+        $this->entityManager = $entityManager;
     }
 
     public function findAll(): array
     {
-        $em = $this->getEntityManager();
-
-        return $em->getRepository(Todo::class)->findAll();
+        return $this->entityManager->getRepository(Todo::class)->findAll();
     }
 
     public function findById(int $id): object
     {
-        $em = $this->getEntityManager();
-
-        return $em->getRepository(Todo::class)->find($id);
+        return $this->entityManager->getRepository(Todo::class)->find($id);
     }
 
     /**
-     * @throws OptimisticLockException
-     * @throws ORMException
      */
     public function create(Todo $todo): Todo
     {
-        $em = $this->getEntityManager();
-
-        $em->persist($todo);
-        $em->flush();
+        $this->entityManager->persist($todo);
+        $this->entityManager->flush();
 
         return $todo;
     }
 
-    /**
-     * @throws OptimisticLockException
-     * @throws ORMException
-     */
     public function update(Todo $todo): object
     {
-        $em = $this->getEntityManager();
         $todoToUpdate = $this->findById($todo->getId());
 
         $todoToUpdate->setTitle($todo->getTitle());
-        $em->flush();
+        $this->entityManager->flush();
 
         return $todoToUpdate;
     }
 
-    /**
-     * @throws OptimisticLockException
-     * @throws ORMException
-     */
     public function remove($id): void
     {
-        $em = $this->getEntityManager();
-
         $todoToRemove = $this->findById($id);
 
-        $em->remove($todoToRemove);
-        $em->flush();
+        $this->entityManager->remove($todoToRemove);
+        $this->entityManager->flush();
     }
 }
