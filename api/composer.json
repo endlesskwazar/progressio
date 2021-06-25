@@ -68,6 +68,7 @@
         }
     },
     "require-dev": {
+        "codeception/module-symfony": "^2.0",
         "symfony/maker-bundle": "^1.32"
     }
 }
