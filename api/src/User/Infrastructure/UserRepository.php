@@ -2,7 +2,6 @@
 
 namespace App\User\Infrastructure;
 
-use App\Todo\Domain\Entity\Todo;
 use App\User\Domain\Contract\UserRepositoryInterface;
 use App\User\Domain\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -14,7 +13,7 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Todo::class);
+        parent::__construct($registry, User::class);
     }
 
     /**
@@ -29,5 +28,12 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
         $em->flush();
 
         return $entity;
+    }
+
+    public function findByEmail(string $email): object
+    {
+        $em = $this->getEntityManager();
+
+        return $em->getRepository(User::class)->findOneBy(array('email' => $email));
     }
 }

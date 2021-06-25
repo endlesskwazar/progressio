@@ -4,13 +4,14 @@ namespace App\User\Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
  * @ORM\HasLifecycleCallbacks
  */
-class User implements JWTUserInterface
+class User implements JWTUserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id()
@@ -96,7 +97,7 @@ class User implements JWTUserInterface
 
     public function getUsername(): string
     {
-        return $this->name;
+        return $this->email;
     }
 
     public function getUserIdentifier(): string
