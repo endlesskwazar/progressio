@@ -40,9 +40,6 @@ class TodoController extends AbstractController
         $handledStamp = $envelope->last(HandledStamp::class);
         $todos = $handledStamp->getResult();
 
-        $user = $this->getUser();
-        dd($user);
-
         $todosCollection = new Collection($todos, $this->todoTransformer);
         $transformedTodos = $this->manager->createData($todosCollection);
         return new JsonResponse($transformedTodos->toArray());

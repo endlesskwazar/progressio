@@ -3,10 +3,13 @@
 namespace App\Todo\Domain\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\ORM\Mapping\InheritanceType;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @ORM\Entity
@@ -56,6 +59,26 @@ abstract class Todo
      * @ORM\Column(type="boolean", length=8000)
      */
     private ?bool $done = false;
+
+    /**
+     * @OneToMany(targetEntity="Url", mappedBy="todo")
+     */
+    private Collection $urls;
+
+    public function __construct()
+    {
+        $this->urls = new ArrayCollection();
+    }
+
+    public function getUrls(): Collection
+    {
+        return $this->urls;
+    }
+
+    public function setUrls(Collection $urls): void
+    {
+        $this->urls = $urls;
+    }
 
     /**
      * Gets triggered only on insert
