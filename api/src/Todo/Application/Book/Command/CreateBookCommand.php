@@ -11,6 +11,7 @@ class CreateBookCommand
     public ?int $pages = null;
     public ?int $page = null;
     public ?string $author = null;
+    public ?array $urls = [];
 
     public function __construct(
         string $title,
@@ -19,7 +20,8 @@ class CreateBookCommand
         ?bool $done,
         ?int $pages,
         ?int $page,
-        ?string $author
+        ?string $author,
+        ?array $urls
     ) {
         $this->title = $title;
         $this->body = $body;
@@ -28,5 +30,6 @@ class CreateBookCommand
         $this->pages = $pages;
         $this->page = $page;
         $this->author = $author;
+        $this->urls = $urls;
     }
 }

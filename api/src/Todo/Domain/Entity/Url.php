@@ -26,13 +26,19 @@ class Url
     /**
      * @ORM\Column(type="string", length=200)
      */
-    private string $description;
+    private ?string $description = null;
 
     /**
-     * @ManyToOne(targetEntity="Url", inversedBy="urls")
-     * @JoinColumn(name="todo_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="Todo", inversedBy="urls")
+     * @JoinColumn(name="todo_id", referencedColumnName="id", nullable=false)
      */
     private Todo $todo;
+
+    public function __construct(string $src, ?string $description)
+    {
+        $this->src = $src;
+        $this->description = $description;
+    }
 
     public function getId(): int
     {

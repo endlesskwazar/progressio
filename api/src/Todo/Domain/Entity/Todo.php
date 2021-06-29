@@ -61,7 +61,7 @@ abstract class Todo
     private ?bool $done = false;
 
     /**
-     * @OneToMany(targetEntity="Url", mappedBy="todo")
+     * @OneToMany(targetEntity="Url", mappedBy="todo", cascade={"persist"})
      */
     private Collection $urls;
 
@@ -73,6 +73,12 @@ abstract class Todo
     public function getUrls(): Collection
     {
         return $this->urls;
+    }
+
+    public function addUrl(Url $url): void
+    {
+        $this->urls->add($url);
+        $url->setTodo($this);
     }
 
     public function setUrls(Collection $urls): void
@@ -167,6 +173,6 @@ abstract class Todo
 
     public function setDone(?bool $done): void
     {
-        $this->done = $done;
+        $this->done = $done ?? false;
     }
 }
