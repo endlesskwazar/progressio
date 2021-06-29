@@ -75,9 +75,15 @@ class User implements JWTUserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
     }
 
-    public static function createFromPayload($username, array $payload)
+    public static function createFromPayload($username, array $payload): User
     {
-        // TODO: Implement createFromPayload() method.
+        $user = new self();
+
+        $user->setId($payload['id']);
+        $user->setName($payload['name']);
+        $user->setEmail($username);
+
+        return $user;
     }
 
     public function getRoles(): array

@@ -9,6 +9,7 @@ use App\Todo\Application\Todo\Command\UpdateTodoCommand;
 use App\Todo\Application\Query\FindTodoQuery;
 use App\Todo\Application\Todo\Query\ListTodosQuery;
 use League\Fractal\Resource\Item;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -17,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Manager;
 
-class TodoController
+class TodoController extends AbstractController
 {
     protected Manager $manager;
     protected TodoTransformer $todoTransformer;
@@ -38,6 +39,9 @@ class TodoController
         $envelope = $queryBus->dispatch(new ListTodosQuery());
         $handledStamp = $envelope->last(HandledStamp::class);
         $todos = $handledStamp->getResult();
+
+        $user = $this->getUser();
+        dd($user);
 
         $todosCollection = new Collection($todos, $this->todoTransformer);
         $transformedTodos = $this->manager->createData($todosCollection);
