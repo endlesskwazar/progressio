@@ -39,6 +39,11 @@ class LoginUserCommandHandler implements MessageHandlerInterface
             throw new \Exception("qwe");
         }
 
-        return $this->JWTManager->create($user);
+        $payload = [
+            'id' => $user->getId(),
+            'name' => $user->getName()
+        ];
+
+        return $this->JWTManager->createFromPayload($user, $payload);
     }
 }
