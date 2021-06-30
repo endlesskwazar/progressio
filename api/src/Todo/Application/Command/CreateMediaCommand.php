@@ -1,13 +1,9 @@
 <?php
 
-namespace App\Todo\Application\Media\Command;
+namespace App\Todo\Application\Command;
 
-class CreateMediaCommand
+class CreateMediaCommand extends AbstractCreateTodoCommand
 {
-    public string $title;
-    public ?string $body = null;
-    public ?string $due = null;
-    public ?bool $done = null;
     public ?string $duration = null;
     public ?string $pause = null;
 
@@ -16,13 +12,12 @@ class CreateMediaCommand
         ?string $body,
         ?string $due,
         ?bool $done,
+        ?array $urls,
         ?string $duration,
         ?string $pause
     ) {
-        $this->title = $title;
-        $this->body = $body;
-        $this->due = $due;
-        $this->done = $done;
+        parent::__construct($title, $body, $due, $done, $urls);
+
         $this->duration = $duration;
         $this->pause = $pause;
     }

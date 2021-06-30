@@ -2,7 +2,7 @@
 
 namespace App\Api\V1\TodoStrategy;
 
-use App\Todo\Application\Media\Command\CreateMediaCommand;
+use App\Todo\Application\Command\CreateMediaCommand;
 use AutoMapperPlus\AutoMapper;
 use AutoMapperPlus\Configuration\AutoMapperConfig;
 use AutoMapperPlus\DataType;

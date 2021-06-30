@@ -24,9 +24,11 @@ class MediaTodo extends Todo
         return $this->duration;
     }
 
-    public function setDuration(string $duration): void
+    public function setDuration(?string $duration): MediaTodo
     {
         $this->duration = $duration;
+
+        return $this;
     }
 
     public function getPause(): ?string
@@ -34,9 +36,11 @@ class MediaTodo extends Todo
         return $this->pause;
     }
 
-    public function setPause(string $pause)
+    public function setPause(?string $pause): MediaTodo
     {
         $this->pause = $pause;
+
+        return $this;
     }
 
 }

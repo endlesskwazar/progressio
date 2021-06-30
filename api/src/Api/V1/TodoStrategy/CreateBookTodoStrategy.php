@@ -2,7 +2,7 @@
 
 namespace App\Api\V1\TodoStrategy;
 
-use App\Todo\Application\Book\Command\CreateBookCommand;
+use App\Todo\Application\Command\CreateBookCommand;
 use AutoMapperPlus\AutoMapper;
 use AutoMapperPlus\Configuration\AutoMapperConfig;
 use AutoMapperPlus\DataType;

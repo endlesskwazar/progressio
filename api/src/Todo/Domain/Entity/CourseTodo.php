@@ -24,9 +24,11 @@ class CourseTodo extends Todo
         return $this->steps;
     }
 
-    public function setSteps(int $steps): void
+    public function setSteps(?int $steps): CourseTodo
     {
         $this->steps = $steps;
+
+        return $this;
     }
 
     public function getStep(): ?int
@@ -34,8 +36,10 @@ class CourseTodo extends Todo
         return $this->step;
     }
 
-    public function setStep(int $step): void
+    public function setStep(?int $step): CourseTodo
     {
         $this->step = $step;
+
+        return $this;
     }
 }

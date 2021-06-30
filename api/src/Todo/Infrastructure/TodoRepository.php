@@ -25,8 +25,6 @@ class TodoRepository implements TodoRepositoryInterface
         return $this->entityManager->getRepository(Todo::class)->find($id);
     }
 
-    /**
-     */
     public function create(Todo $todo): Todo
     {
         $this->entityManager->persist($todo);

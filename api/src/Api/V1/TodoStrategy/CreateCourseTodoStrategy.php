@@ -2,7 +2,7 @@
 
 namespace App\Api\V1\TodoStrategy;
 
-use App\Todo\Application\Course\Command\CreateCourseCommand;
+use App\Todo\Application\Command\CreateCourseCommand;
 use AutoMapperPlus\AutoMapper;
 use AutoMapperPlus\Configuration\AutoMapperConfig;
 use AutoMapperPlus\DataType;
