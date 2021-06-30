@@ -29,9 +29,11 @@ class BookTodo extends Todo
         return $this->pages;
     }
 
-    public function setPages(?int $pages): void
+    public function setPages(?int $pages): BookTodo
     {
         $this->pages = $pages;
+
+        return $this;
     }
 
     public function getPage(): ?int
@@ -39,9 +41,11 @@ class BookTodo extends Todo
         return $this->page;
     }
 
-    public function setPage(?int $page): void
+    public function setPage(?int $page): BookTodo
     {
         $this->page = $page;
+
+        return $this;
     }
 
     public function getAuthor(): ?string
@@ -49,8 +53,10 @@ class BookTodo extends Todo
         return $this->author;
     }
 
-    public function setAuthor(?string $author): void
+    public function setAuthor(?string $author): BookTodo
     {
         $this->author = $author;
+
+        return $this;
     }
 }

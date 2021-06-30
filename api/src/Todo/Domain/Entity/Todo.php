@@ -75,15 +75,12 @@ abstract class Todo
         return $this->urls;
     }
 
-    public function addUrl(Url $url): void
+    public function addUrl(Url $url): Todo
     {
         $this->urls->add($url);
         $url->setTodo($this);
-    }
 
-    public function setUrls(Collection $urls): void
-    {
-        $this->urls = $urls;
+        return $this;
     }
 
     /**
@@ -111,9 +108,11 @@ abstract class Todo
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function setId(int $id): Todo
     {
         $this->id = $id;
+
+        return $this;
     }
 
     public function getTitle(): string
@@ -121,9 +120,11 @@ abstract class Todo
         return $this->title;
     }
 
-    public function setTitle($title): void
+    public function setTitle($title): Todo
     {
         $this->title = $title;
+
+        return $this;
     }
 
     public function getCreated(): datetime
@@ -131,9 +132,11 @@ abstract class Todo
         return $this->created;
     }
 
-    public function setCreated(datetime $created): void
+    public function setCreated(datetime $created): Todo
     {
         $this->created = $created;
+
+        return $this;
     }
 
     public function getBody(): ?string
@@ -141,9 +144,11 @@ abstract class Todo
         return $this->body;
     }
 
-    public function setBody(?string $body): void
+    public function setBody(?string $body): Todo
     {
         $this->body = $body;
+
+        return $this;
     }
 
     public function getUpdated(): ?datetime
@@ -151,9 +156,11 @@ abstract class Todo
         return $this->updated;
     }
 
-    public function setUpdated(datetime $updated): void
+    public function setUpdated(datetime $updated): Todo
     {
         $this->updated = $updated;
+
+        return $this;
     }
 
     public function getDue(): ?datetime
@@ -161,9 +168,11 @@ abstract class Todo
         return $this->due;
     }
 
-    public function setDue(?datetime $due): void
+    public function setDue(?datetime $due): Todo
     {
         $this->due = $due;
+
+        return $this;
     }
 
     public function getDone(): bool
@@ -171,8 +180,10 @@ abstract class Todo
         return $this->done;
     }
 
-    public function setDone(?bool $done): void
+    public function setDone(?bool $done): Todo
     {
         $this->done = $done ?? false;
+
+        return $this;
     }
 }
