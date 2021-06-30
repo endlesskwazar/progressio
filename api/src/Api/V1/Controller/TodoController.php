@@ -4,6 +4,7 @@ namespace App\Api\V1\Controller;
 
 use App\Api\V1\TodoStrategy\CreateTodoCommandStrategy;
 use App\Api\V1\Transformer\TodoTransformer;
+use App\Shared\Application\Exception\TestException;
 use App\Todo\Application\Todo\Command\RemoveTodoCommand;
 use App\Todo\Application\Todo\Command\UpdateTodoCommand;
 use App\Todo\Application\Query\FindTodoQuery;
@@ -36,6 +37,7 @@ class TodoController extends AbstractController
      */
     public function list(MessageBusInterface $queryBus): JsonResponse
     {
+        throw new TestException("qwe");
         $envelope = $queryBus->dispatch(new ListTodosQuery());
         $handledStamp = $envelope->last(HandledStamp::class);
         $todos = $handledStamp->getResult();
