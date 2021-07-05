@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Todo\Application\Query;
+namespace App\Todo\Application\Todo\Query;
 
 class FindTodoQuery
 {

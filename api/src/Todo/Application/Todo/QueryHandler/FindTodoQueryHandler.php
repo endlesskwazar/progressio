@@ -2,7 +2,7 @@
 
 namespace App\Todo\Application\Todo\QueryHandler;
 
-use App\Todo\Application\Query\FindTodoQuery;
+use App\Todo\Application\Todo\Query\FindTodoQuery;
 use App\Todo\Domain\Entity\Todo;
 use App\Todo\Infrastructure\TodoRepository;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;

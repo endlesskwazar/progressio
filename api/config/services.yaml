@@ -46,3 +46,13 @@ services:
             - addStrategy: ['@App\Api\V1\TodoStrategy\CreateBookTodoStrategy']
             - addStrategy: ['@App\Api\V1\TodoStrategy\CreateCourseTodoStrategy']
             - addStrategy: ['@App\Api\V1\TodoStrategy\CreateMediaTodoStrategy']
+
+    App\Api\V1\Serializers\Todo\BookTodoSerializer: ~
+    App\Api\V1\Serializers\Todo\MediaTodoSerializer: ~
+    App\Api\V1\Serializers\Todo\CourseTodoSerializer: ~
+
+    App\Api\V1\Serializers\Todo\TodoSerializer:
+        calls:
+            - addTodoSerializer: [ '@App\Api\V1\Serializers\Todo\BookTodoSerializer' ]
+            - addTodoSerializer: [ '@App\Api\V1\Serializers\Todo\MediaTodoSerializer' ]
+            - addTodoSerializer: [ '@App\Api\V1\Serializers\Todo\CourseTodoSerializer' ]
