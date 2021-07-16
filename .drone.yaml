@@ -4,6 +4,8 @@ name: cicd
 steps:
   - name: test
     image: docker/compose
+    volume:
+      - /var/run/docker.sock:/var/run/docker.sock
     commands:
       - echo $DOCKER_HOST
       - cp .env.example .env
