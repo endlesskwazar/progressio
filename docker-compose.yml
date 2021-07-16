@@ -6,7 +6,7 @@ services:
     build:
       args:
         user: john
-        uid: 1000
+        uid: 1001
       context: ./infra/dev/docker
       dockerfile: php.Dockerfile
     restart: unless-stopped

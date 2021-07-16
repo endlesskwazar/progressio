@@ -10,21 +10,9 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            Todo:
+            Domain:
                 is_bundle: false
                 type: annotation
-                dir: '%kernel.project_dir%/src/Todo/Domain/Entity'
-                prefix: 'App\Todo\Domain\Entity'
-                alias: Todo
-            User:
-                is_bundle: false
-                type: annotation
-                dir: '%kernel.project_dir%/src/User/Domain/Entity'
-                prefix: 'App\User\Domain\Entity'
-                alias: User
-            Uploader:
-                is_bundle: false
-                type: annotation
-                dir: '%kernel.project_dir%/src/Uploader/Domain/Entity'
-                prefix: 'App\Uploader\Domain\Entity'
-                alias: Uploader
+                dir: '%kernel.project_dir%/src/Domain/Entity'
+                prefix: 'App\Domain\Entity'
+                alias: Domain

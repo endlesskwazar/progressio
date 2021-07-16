@@ -5,16 +5,12 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     public_upload_dir: '%kernel.project_dir%/public/uploads'
-    upload_dir: '../var/uploads'
 
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-
-        bind:
-            $uploadDir: '%upload_dir%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -26,33 +22,9 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
 
-    App\Api\V1\Controller\TodoController:
-        tags: [ controller.service_arguments ]
-
-    App\Api\V1\Controller\UserController:
-        tags: [ controller.service_arguments ]
-
-    App\Api\V1\Controller\UploaderController:
-        tags: [ controller.service_arguments ]
-
-    League\Fractal\Manager: ~
-
-    App\Api\V1\TodoStrategy\CreateBookTodoStrategy: ~
-    App\Api\V1\TodoStrategy\CreateCourseTodoStrategy: ~
-    App\Api\V1\TodoStrategy\CreateMediaTodoStrategy: ~
-
-    App\Api\V1\TodoStrategy\CreateTodoCommandStrategy:
+    App\Application\Commands\CreateTodo\CreateTodoCommand:
         calls:
-            - addStrategy: ['@App\Api\V1\TodoStrategy\CreateBookTodoStrategy']
-            - addStrategy: ['@App\Api\V1\TodoStrategy\CreateCourseTodoStrategy']
-            - addStrategy: ['@App\Api\V1\TodoStrategy\CreateMediaTodoStrategy']
-
-    App\Api\V1\Serializers\Todo\BookTodoSerializer: ~
-    App\Api\V1\Serializers\Todo\MediaTodoSerializer: ~
-    App\Api\V1\Serializers\Todo\CourseTodoSerializer: ~
-
-    App\Api\V1\Serializers\Todo\TodoSerializer:
-        calls:
-            - addTodoSerializer: [ '@App\Api\V1\Serializers\Todo\BookTodoSerializer' ]
-            - addTodoSerializer: [ '@App\Api\V1\Serializers\Todo\MediaTodoSerializer' ]
-            - addTodoSerializer: [ '@App\Api\V1\Serializers\Todo\CourseTodoSerializer' ]
+            - addStrategy: [ '@App\Application\Commands\CreateTodo\CreateBaseTodoCommandStrategy' ]
+            - addStrategy: [ '@App\Application\Commands\CreateTodo\CreateReadTodoCommandStrategy' ]
+            - addStrategy: [ '@App\Application\Commands\CreateTodo\CreateMediaTodoCommandStrategy' ]
+            - addStrategy: [ '@App\Application\Commands\CreateTodo\CreateCourseTodoCommandStrategy' ]

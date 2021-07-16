@@ -8,7 +8,7 @@ security:
     providers:
         jwt: # optional, any user provider can be used
             lexik_jwt:
-                class: App\User\Domain\Entity\User
+                class: App\Domain\Entity\User
     firewalls:
 
         login:
@@ -32,4 +32,4 @@ security:
         - { path: ^/api/v1/files, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/v1/todos, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api,       roles: IS_AUTHENTICATED_ANONYMOUSLY }

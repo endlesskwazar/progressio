@@ -24,3 +24,39 @@ docker-compose exec php php bin/console doctrine:migrations:migrate
 ```
 docker-compose exec php php bin/console lexik:jwt:generate-keypair
 ```
+
+# Testing
+
+Application uses codeception as testing framework
+
+To run tests execute:
+
+```bash
+docker-compose exex php composer test
+```
+
+To generate test use:
+
+```
+php vendor/bin/codecept generate:cest [kind] [name]
+```
+
+where:
+
+- [kind] - Kind of test e.g, unit functional acceptance
+- [name] - Name of test
+
+# Database
+
+Application uses Doctrine and Symfony doctrine bundle. And leverage Code first approach to migrations.
+After changing entities you can generate migrations using:
+
+```bash
+docker-compose exec php php bin/console make:migration
+```
+
+And apply migrations using:
+
+```bash
+docker-compose exec php php bin/console doctrine:migrations:migrate
+```
