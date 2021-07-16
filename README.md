@@ -32,13 +32,21 @@ Application uses codeception as testing framework
 To run tests execute:
 
 ```bash
-docker-compose exex php composer test
+docker-compose exec php composer test
 ```
+
+This command will run all tests. To run specific group of test use:
+
+```bash
+docker-compose exec php composer test-single [group]
+```
+
+where [group] is one of unit, functional, acceptance
 
 To generate test use:
 
 ```
-php vendor/bin/codecept generate:cest [kind] [name]
+docker-compose exec php php vendor/bin/codecept generate:cest [kind] [name]
 ```
 
 where:

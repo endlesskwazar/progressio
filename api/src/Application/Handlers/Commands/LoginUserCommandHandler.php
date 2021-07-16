@@ -1,9 +1,9 @@
 <?php
 
-namespace App\User\Application\CommandHandler;
+namespace App\Application\Handlers\Commands;
 
-use App\User\Application\Command\LoginUserCommand;
-use App\User\Domain\Contract\UserRepositoryInterface;
+use App\Application\Commands\Auth\LoginUserCommand;
+use App\Domain\Contracts\Repositories\UserRepositoryInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;

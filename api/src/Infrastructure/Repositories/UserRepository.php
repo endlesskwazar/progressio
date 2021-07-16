@@ -1,9 +1,9 @@
 <?php
 
-namespace App\User\Infrastructure;
+namespace App\Infrastructure\Repositories;
 
-use App\User\Domain\Contract\UserRepositoryInterface;
-use App\User\Domain\Entity\User;
+use App\Domain\Contracts\Repositories\UserRepositoryInterface;
+use App\Domain\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;

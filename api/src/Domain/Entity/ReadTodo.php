@@ -88,7 +88,7 @@ class ReadTodo extends LearningMaterialTodo
             return null;
         }
 
-        $progress = ($this->pages / $this->page) * 100;
+        $progress = ($this->page / $this->pages ) * 100;
 
         return number_format((float)$progress, 2, '.', '');
     }

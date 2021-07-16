@@ -1,10 +1,10 @@
 <?php
 
-namespace App\User\Application\CommandHandler;
+namespace App\Application\Handlers\Commands;
 
-use App\User\Application\Command\RegisterUserCommand;
-use App\User\Domain\Contract\UserRepositoryInterface;
-use App\User\Domain\Entity\User;
+use App\Application\Commands\Auth\RegisterUserCommand;
+use App\Domain\Contracts\Repositories\UserRepositoryInterface;
+use App\Domain\Entity\User;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
