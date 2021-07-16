@@ -4,7 +4,7 @@ name: cicd
 steps:
   - name: test
     image: docker/compose
-    volume:
+    volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
       - echo $DOCKER_HOST
