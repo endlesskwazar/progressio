@@ -9,7 +9,6 @@ steps:
         path: /var/run/docker.sock
     commands:
       - pwd
-      - up -f /drone/src/docker-compose.yaml
 volumes:
   - name: docker_sock
     host:
