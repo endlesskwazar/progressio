@@ -1,25 +1,28 @@
 # RUN Project
 
 1. Clone repository
-2. Execute
+3. Copy env.example to .env
+4. Copy api/env.example to .env
+5. Setup up APP_SECRET in api/.enf file
+6. Execute
 
 ```
 docker-compose up --build
 ```
 
-3. Install composer deps
+7. Install composer deps
 
 ```
 docker-compose exec php composer install
 ```
 
-4. Run migrations
+8. Run migrations
 
 ```
 docker-compose exec php php bin/console doctrine:migrations:migrate 
 ```
 
-5. Generate SSL keys for JWT
+9. Generate SSL keys for JWT
 
 ```
 docker-compose exec php php bin/console lexik:jwt:generate-keypair
