@@ -21,3 +21,8 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
+
+    App\Application\Common\ArgumentResolvers\Todo\TodoRequest:
+        calls:
+            - addTodoRequest: ['@App\Application\Common\ArgumentResolvers\Todo\BaseTodoRequest']
+            - addTodoRequest: ['@App\Application\Common\ArgumentResolvers\Todo\MediaTodoRequest']

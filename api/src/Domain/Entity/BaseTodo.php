@@ -58,7 +58,7 @@ class BaseTodo implements TodoInterface
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -106,7 +106,7 @@ class BaseTodo implements TodoInterface
     /**
      * @return DateTimeImmutable
      */
-    public function getDue(): DateTimeImmutable
+    public function getDue(): ?DateTimeImmutable
     {
         return $this->due;
     }
@@ -119,8 +119,8 @@ class BaseTodo implements TodoInterface
         $this->due = $due;
     }
 
-    public function getType(): string
+    public static function getType(): string
     {
-        return "base";
+        return self::BASE_TYPE;
     }
 }

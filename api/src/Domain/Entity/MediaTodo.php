@@ -77,13 +77,13 @@ class MediaTodo extends LearningMaterialTodo
         $this->pause = $pause;
     }
 
-    public function getType(): string
+    public static function getType(): string
     {
-        return "media";
+        return self::MEDIA_TYPE;
     }
 
     public function getProgress(): ?float
     {
-        // TODO: Implement getProgress() method.
+        return null;
     }
 }

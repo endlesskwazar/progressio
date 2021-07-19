@@ -2,9 +2,9 @@
 
 namespace App\Domain\Contracts\Services;
 
-use App\Domain\Entity\BaseTodo;
+use App\Domain\Contracts\Entity\TodoInterface;
 
 interface TodoServiceInterface
 {
-    public function save(BaseTodo $todo): BaseTodo;
+    public function save(TodoInterface $todo): TodoInterface;
 }

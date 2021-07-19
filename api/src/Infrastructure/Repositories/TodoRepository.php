@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Repositories;
 
 use App\Domain\Contracts\Repositories\TodoRepositoryInterface;
+use App\Domain\Contracts\Entity\TodoInterface;
 use App\Domain\Entity\BaseTodo;
 
 class TodoRepository extends AbstractRepository implements TodoRepositoryInterface
@@ -17,7 +18,7 @@ class TodoRepository extends AbstractRepository implements TodoRepositoryInterfa
         return $this->getRepository()->findAll();
     }
 
-    public function save(BaseTodo $todo): BaseTodo
+    public function save(TodoInterface $todo): TodoInterface
     {
         $this->entityManager->persist($todo);
         $this->entityManager->flush();

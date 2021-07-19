@@ -81,7 +81,7 @@ abstract class LearningMaterialTodo extends BaseTodo implements LearningMaterial
     /**
      * @throws BadMethodCallException
      */
-    public function getType(): string
+    public static function getType(): string
     {
         throw new BadMethodCallException("Todo must implement type");
     }

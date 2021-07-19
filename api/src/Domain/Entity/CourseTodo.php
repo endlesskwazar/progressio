@@ -77,9 +77,9 @@ class CourseTodo extends LearningMaterialTodo
         $this->step = $step;
     }
 
-    public function getType(): string
+    public static function getType(): string
     {
-        return "course";
+        return self::COURSE_TYPE;
     }
 
     public function getProgress(): ?float
