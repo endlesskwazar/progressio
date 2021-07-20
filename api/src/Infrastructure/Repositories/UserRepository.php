@@ -4,36 +4,24 @@ namespace App\Infrastructure\Repositories;
 
 use App\Domain\Contracts\Repositories\UserRepositoryInterface;
 use App\Domain\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
-use Doctrine\Persistence\ManagerRegistry;
 
-class UserRepository extends ServiceEntityRepository implements UserRepositoryInterface
+class UserRepository extends AbstractRepository implements UserRepositoryInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    public function create(User $entity): User
     {
-        parent::__construct($registry, User::class);
-    }
-
-    /**
-     * @throws OptimisticLockException
-     * @throws ORMException
-     */
-    public function create(User $entity): object
-    {
-        $em = $this->getEntityManager();
-
-        $em->persist($entity);
-        $em->flush();
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
 
         return $entity;
     }
 
-    public function findByEmail(string $email): object
+    public function findByEmail(string $email): User
     {
-        $em = $this->getEntityManager();
+        return $this->getRepository()->findOneBy(array('email' => $email));
+    }
 
-        return $em->getRepository(User::class)->findOneBy(array('email' => $email));
+    protected function getClass(): string
+    {
+        return User::class;
     }
 }

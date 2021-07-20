@@ -6,6 +6,6 @@ use App\Domain\Entity\User;
 
 interface UserRepositoryInterface
 {
-    public function create(User $entity): object;
-    public function findByEmail(string $email): object;
+    public function create(User $entity): User;
+    public function findByEmail(string $email): User;
 }

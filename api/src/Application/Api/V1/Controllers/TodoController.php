@@ -4,11 +4,12 @@ namespace App\Application\Api\V1\Controllers;
 
 use App\Domain\Contracts\Entity\TodoInterface;
 use App\Domain\Contracts\Services\TodoServiceInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class TodoController extends BaseController
+class TodoController extends AbstractController
 {
     private TodoServiceInterface $todoService;
 
