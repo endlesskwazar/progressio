@@ -31,7 +31,7 @@ final class TodoService implements TodoServiceInterface
 
     public function saveToMe(TodoInterface $todo): TodoInterface
     {
-        $user = $this->userService->findByEmail($this->security->getUser()->getUserIdentifier());
+        $user = $this->userService->findById($this->security->getUser()->getUserIdentifier());
         $todo->setUser($user);
         return  $this->todoRepository->save($todo);
     }

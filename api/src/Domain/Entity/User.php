@@ -2,23 +2,26 @@
 
 namespace App\Domain\Entity;
 
+use App\Domain\Contracts\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
  * @ORM\HasLifecycleCallbacks
  */
-class User implements JWTUserInterface, PasswordAuthenticatedUserInterface
+class User implements JWTUserInterface, PasswordAuthenticatedUserInterface, EntityInterface
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\Column(type="uuid", unique=true)
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class=UuidGenerator::class)
      */
-    private int $id;
+    private string $id;
 
     /**
      * @ORM\Column(type="string", length=150)
@@ -35,12 +38,12 @@ class User implements JWTUserInterface, PasswordAuthenticatedUserInterface
      */
     private string $password;
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function setId(string $id): void
     {
         $this->id = $id;
     }
@@ -108,6 +111,6 @@ class User implements JWTUserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->email;
+        return $this->id;
     }
 }

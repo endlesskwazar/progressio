@@ -26,8 +26,8 @@ interface UserServiceInterface
     /**
      * Find user by id
      *
-     * @param int $id
+     * @param string $id
      * @return User
      */
-    public function findById(int $id): User;
+    public function findById(string $id): User;
 }

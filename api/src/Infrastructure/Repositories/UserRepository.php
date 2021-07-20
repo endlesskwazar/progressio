@@ -20,7 +20,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         return $this->getRepository()->findOneBy(array('email' => $email));
     }
 
-    public function findById(int $id): User
+    public function findById(string $id): User
     {
         return $this->getRepository()->find($id);
     }
