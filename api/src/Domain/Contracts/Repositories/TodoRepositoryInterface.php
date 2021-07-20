@@ -7,6 +7,6 @@ use App\Domain\Contracts\Entity\TodoInterface;
 interface TodoRepositoryInterface
 {
     public function save(TodoInterface $todo): TodoInterface;
-
     public function findAll(): array;
+    public function findByUserId(int $userId): array;
 }

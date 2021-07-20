@@ -7,5 +7,5 @@ use App\Domain\Entity\User;
 interface AuthServiceInterface
 {
     public function register(User $user): void;
-    public function getToken(string $email, string $password): string;
+    public function getToken(string $email, string $password): TokenInterface;
 }

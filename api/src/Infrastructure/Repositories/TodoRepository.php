@@ -25,4 +25,11 @@ class TodoRepository extends AbstractRepository implements TodoRepositoryInterfa
 
         return $todo;
     }
+
+    public function findByUserId(int $userId): array
+    {
+        return $this->getRepository()->findBy([
+            'user_id' => $userId
+        ]);
+    }
 }

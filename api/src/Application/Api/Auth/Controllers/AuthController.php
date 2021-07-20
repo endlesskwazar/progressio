@@ -2,18 +2,19 @@
 
 namespace App\Application\Api\Auth\Controllers;
 
+use App\Application\Api\Auth\Requests\LoginRequest;
 use App\Application\Api\Auth\Requests\RegisterRequest;
+use App\Application\Common\BaseController;
 use App\Domain\Entity\User;
 use App\Infrastructure\Contracts\Auth\AuthServiceInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
-final class AuthController extends AbstractController
+final class AuthController extends BaseController
 {
     private AuthServiceInterface $authService;
 
@@ -41,15 +42,15 @@ final class AuthController extends AbstractController
     /**
      * @Route("/api/auth/login", methods={"POST"})
      */
-    public function login(Request $request): JsonResponse
-    {
+    public function login(
+        LoginRequest $request,
+        ObjectNormalizer $normalizer
+    ): JsonResponse {
         $token = $this->authService->getToken(
-          $request->get('email'),
-          $request->get('password')
+            $request->getRequest()->request->get('email'),
+            $request->getRequest()->request->get('password')
         );
 
-        return $this->json([
-            'token' => $token
-        ], 200);
+        return $this->api($token, Response::HTTP_OK, $normalizer);
     }
 }

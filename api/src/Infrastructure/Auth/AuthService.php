@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Infrastructure\Services;
+namespace App\Infrastructure\Auth;
 
 use App\Domain\Contracts\Services\UserServiceInterface;
 use App\Domain\Entity\User;
 use App\Infrastructure\Contracts\Auth\AuthServiceInterface;
+use App\Infrastructure\Contracts\Auth\TokenInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -31,7 +32,7 @@ final class AuthService implements AuthServiceInterface
         $this->userService->save($user);
     }
 
-    public function getToken(string $email, string $password): string
+    public function getToken(string $email, string $password): TokenInterface
     {
         $user = $this->userService->findByEmail($email);
 
@@ -39,9 +40,11 @@ final class AuthService implements AuthServiceInterface
             throw new \Exception("Password mismatch");
         }
 
-        return $this->JWTManager->createFromPayload($user, [
+        $token = $this->JWTManager->createFromPayload($user, [
             'id' => $user->getId(),
             'name' => $user->getName()
         ]);
+
+        return new Token($token);
     }
 }

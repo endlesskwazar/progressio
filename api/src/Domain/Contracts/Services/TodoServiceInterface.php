@@ -8,4 +8,5 @@ interface TodoServiceInterface
 {
     public function save(TodoInterface $todo): TodoInterface;
     public function saveToMe(TodoInterface $todo): TodoInterface;
+    public function findMy(): array;
 }

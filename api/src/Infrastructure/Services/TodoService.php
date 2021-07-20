@@ -3,7 +3,6 @@
 namespace App\Infrastructure\Services;
 
 use App\Domain\Contracts\Repositories\TodoRepositoryInterface;
-use App\Domain\Contracts\Repositories\UserRepositoryInterface;
 use App\Domain\Contracts\Services\TodoServiceInterface;
 use App\Domain\Contracts\Entity\TodoInterface;
 use App\Domain\Contracts\Services\UserServiceInterface;
@@ -35,5 +34,10 @@ final class TodoService implements TodoServiceInterface
         $user = $this->userService->findByEmail($this->security->getUser()->getUserIdentifier());
         $todo->setUser($user);
         return  $this->todoRepository->save($todo);
+    }
+
+    public function findMy(): array
+    {
+        return $this->todoRepository->findByUserId($this->security->getUser()->getUserIdentifier());
     }
 }
