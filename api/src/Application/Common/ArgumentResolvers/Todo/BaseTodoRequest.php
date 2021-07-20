@@ -2,28 +2,32 @@
 
 namespace App\Application\Common\ArgumentResolvers\Todo;
 
+use App\Application\Common\ArgumentResolvers\Validation\AbstractValidationRequest;
+use App\Domain\Contracts\Entity\TodoInterface;
 use App\Domain\Entity\BaseTodo;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Exception;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class BaseTodoRequest implements TodoRequestInterface
+class BaseTodoRequest extends AbstractValidationRequest implements TodoRequestInterface
 {
-    private ValidatorInterface $validator;
     private SerializerInterface $serializer;
 
-    public function __construct(ValidatorInterface $validator, SerializerInterface $serializer)
-    {
-        $this->validator = $validator;
+    public function __construct(
+        ValidatorInterface $validator,
+        RequestStack $requestStack,
+        SerializerInterface $serializer
+    ) {
         $this->serializer = $serializer;
+        parent::__construct($validator, $requestStack);
     }
 
     public function supports(string $type): bool
@@ -31,31 +35,9 @@ class BaseTodoRequest implements TodoRequestInterface
         return BaseTodo::getType() === $type;
     }
 
-    /**
-     * @throws Exception
-     * @throws ExceptionInterface
-     */
-    public function getEntityInstance(Request $request): BaseTodo
+    protected function constrains(): Assert\Collection
     {
-        $this->validate($request);
-
-        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
-
-        $normalizer = new ObjectNormalizer($classMetadataFactory);
-        $serializer = new Serializer([$normalizer]);
-
-        return $serializer->denormalize(
-            $request->request->all(),
-            BaseTodo::class,
-        );
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function validate(Request $request)
-    {
-        $constraint = new Assert\Collection([
+        return new Assert\Collection([
             'type' => new Assert\EqualTo("base"),
             'title' => [
                 new Assert\NotBlank(),
@@ -67,11 +49,29 @@ class BaseTodoRequest implements TodoRequestInterface
                 new Assert\Length(null, null, 1600)
             ])
         ]);
+    }
 
-        $violations = $this->validator->validate($request->request->all(), $constraint);
+    /**
+     * @throws Exception
+     * @throws ExceptionInterface
+     */
+    public function getEntityInstance(): TodoInterface
+    {
+        $violations = $this->validate();
 
         if (0 !== count($violations)) {
             throw new Exception("Violations");
         }
+
+        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+
+        $normalizer = new ObjectNormalizer($classMetadataFactory);
+        $serializer = new Serializer([$normalizer]);
+
+
+        return $serializer->denormalize(
+            $this->getRequest()->request->all(),
+            BaseTodo::class
+        );
     }
 }

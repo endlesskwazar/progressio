@@ -24,7 +24,7 @@ class TodoController extends BaseController
         TodoInterface $todo,
         SerializerInterface $serializer
     ): JsonResponse {
-        $created = $this->todoService->save($todo);
+        $created = $this->todoService->saveToMe($todo);
         $json = $serializer->serialize($created, 'json');
         return $this->json($json, JsonResponse::HTTP_CREATED);
     }

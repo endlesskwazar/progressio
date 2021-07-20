@@ -2,28 +2,19 @@
 
 namespace App\Application\Common\ArgumentResolvers\Todo;
 
+use App\Application\Common\ArgumentResolvers\Validation\AbstractValidationRequest;
 use App\Domain\Entity\MediaTodo;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class MediaTodoRequest implements TodoRequestInterface
+class MediaTodoRequest extends AbstractValidationRequest implements TodoRequestInterface
 {
-    private ValidatorInterface $validator;
-    private SerializerInterface $serializer;
-
-    public function __construct(ValidatorInterface $validator, SerializerInterface $serializer)
+    public function __construct(ValidatorInterface $validator, RequestStack $requestStack)
     {
-        $this->validator = $validator;
-        $this->serializer = $serializer;
+        parent::__construct($validator, $requestStack);
     }
 
     public function supports(string $type): bool
@@ -34,24 +25,13 @@ class MediaTodoRequest implements TodoRequestInterface
     /**
      * @throws ExceptionInterface
      */
-    public function getEntityInstance(Request $request): MediaTodo
+    public function getEntityInstance(): MediaTodo
     {
-        $this->validate($request);
-
-        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
-
-        $normalizer = new ObjectNormalizer($classMetadataFactory);
-        $serializer = new Serializer([$normalizer]);
-
-        return $serializer->denormalize(
-            $request->request->all(),
-            MediaTodo::class,
-        );
     }
 
-    public function validate(Request $request)
+    protected function constrains(): Assert\Collection
     {
-        $constraint = new Assert\Collection([
+        return new Assert\Collection([
             'type' => new Assert\EqualTo("media"),
             'title' => [
                 new Assert\NotBlank(),
@@ -74,11 +54,5 @@ class MediaTodoRequest implements TodoRequestInterface
                 ]),
             ]),
         ]);
-
-        $violations = $this->validator->validate($request->request->all(), $constraint);
-
-        if (0 !== count($violations)) {
-            throw new Exception("Violations");
-        }
     }
 }

@@ -28,6 +28,7 @@ class TodoArgumentResolver implements ArgumentValueResolverInterface
      */
     public function resolve(Request $request, ArgumentMetadata $argument): Generator
     {
-        yield $this->todoRequest->getEntityInstanceIfValid($request->get("type"), $request);
+        // Todo get rid of elvise
+        yield $this->todoRequest->getEntityInstanceIfValid($request->get("type") ?? "", $request);
     }
 }

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\ORM\Mapping\InheritanceType;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
@@ -47,6 +48,12 @@ class BaseTodo implements TodoInterface
      * @ORM\Column(type="date_immutable", nullable = true, nullable=true)
      */
     private ?DateTimeImmutable $due;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private UserInterface $user;
 
     public function __construct(string $title, ?string $description = null, ?DateTimeImmutable $due = null)
     {
@@ -122,5 +129,10 @@ class BaseTodo implements TodoInterface
     public static function getType(): string
     {
         return self::BASE_TYPE;
+    }
+
+    public function setUser(UserInterface $user)
+    {
+        $this->user = $user;
     }
 }

@@ -13,7 +13,7 @@ class ReadTodoRequest implements TodoRequestInterface
         return ReadTodo::getType() === $type;
     }
 
-    public function getEntityInstance(Request $request): TodoInterface
+    public function getEntityInstance(): TodoInterface
     {
         // TODO: Implement getEntityInstance() method.
     }

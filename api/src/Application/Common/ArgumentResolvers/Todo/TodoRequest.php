@@ -20,18 +20,18 @@ class TodoRequest
      */
     public function getEntityInstanceIfValid(string $type, Request $request): TodoInterface
     {
-        $entity = null;
+        $todo = null;
 
         foreach ($this->todoRequests as $todoRequest) {
             if ($todoRequest->supports($type)) {
-                $entity = $todoRequest->getEntityInstance($request);
+                $todo = $todoRequest->getEntityInstance();
             }
         }
 
-        if ($entity === null) {
+        if ($todo === null) {
             throw new Exception("Todo type not supported");
         }
 
-        return $entity;
+        return $todo;
     }
 }
