@@ -5,12 +5,14 @@ namespace App\Domain\Entity;
 use App\Domain\Contracts\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
+ * @UniqueEntity("email")
  * @ORM\HasLifecycleCallbacks
  */
 class User implements JWTUserInterface, PasswordAuthenticatedUserInterface, EntityInterface

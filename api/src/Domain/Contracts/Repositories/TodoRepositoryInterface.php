@@ -8,5 +8,5 @@ interface TodoRepositoryInterface
 {
     public function save(TodoInterface $todo): TodoInterface;
     public function findAll(): array;
-    public function findByUserId(int $userId): array;
+    public function findByUserId(string $userId): array;
 }
