@@ -22,4 +22,12 @@ interface UserServiceInterface
      * @return User Founded user entity
      */
     public function findByEmail(string $email): User;
+
+    /**
+     * Find user by id
+     *
+     * @param int $id
+     * @return User
+     */
+    public function findById(int $id): User;
 }

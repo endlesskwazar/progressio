@@ -3,21 +3,26 @@
 namespace App\Infrastructure\Services;
 
 use App\Domain\Contracts\Repositories\TodoRepositoryInterface;
+use App\Domain\Contracts\Repositories\UserRepositoryInterface;
 use App\Domain\Contracts\Services\TodoServiceInterface;
 use App\Domain\Contracts\Entity\TodoInterface;
+use App\Domain\Contracts\Services\UserServiceInterface;
 use Symfony\Component\Security\Core\Security;
 
-class TodoService implements TodoServiceInterface
+final class TodoService implements TodoServiceInterface
 {
-    protected TodoRepositoryInterface $todoRepository;
-    protected Security $security;
+    private TodoRepositoryInterface $todoRepository;
+    private Security $security;
+    private UserServiceInterface $userService;
 
     public function __construct(
         TodoRepositoryInterface $todoRepository,
-        Security $security
+        Security $security,
+        UserServiceInterface $userService
     ) {
         $this->todoRepository = $todoRepository;
         $this->security = $security;
+        $this->userService = $userService;
     }
 
     public function save(TodoInterface $todo): TodoInterface
@@ -27,7 +32,8 @@ class TodoService implements TodoServiceInterface
 
     public function saveToMe(TodoInterface $todo): TodoInterface
     {
-        $todo->setUser($this->security->getUser());
+        $user = $this->userService->findByEmail($this->security->getUser()->getUserIdentifier());
+        $todo->setUser($user);
         return  $this->todoRepository->save($todo);
     }
 }
