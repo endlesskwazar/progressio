@@ -2,6 +2,7 @@
 
 namespace App\Application\Api\Auth\Controllers;
 
+use App\Application\Api\Auth\Requests\RegisterRequest;
 use App\Domain\Entity\User;
 use App\Infrastructure\Contracts\Auth\AuthServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -9,6 +10,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 final class AuthController extends AbstractController
 {
@@ -21,13 +24,14 @@ final class AuthController extends AbstractController
 
     /**
      * @Route("/api/auth/register", methods={"POST"})
+     * @throws ExceptionInterface
      */
-    public function register(Request $request): JsonResponse
+    public function register(RegisterRequest $request, SerializerInterface $requestDenormalizer): JsonResponse
     {
-        $user = new User();
-        $user->setEmail($request->get('email'));
-        $user->setName($request->get('name'));
-        $user->setPassword($request->get('password'));
+        $user = $requestDenormalizer->denormalize(
+            $request->getRequest()->request->all(),
+            User::class
+        );
 
         $this->authService->register($user);
 

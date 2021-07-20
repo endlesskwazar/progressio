@@ -12,6 +12,9 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+        bind:
+            $requestDenormalizer: '@request.denormalizer'
+
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -26,3 +29,7 @@ services:
         calls:
             - addTodoRequest: ['@App\Application\Common\ArgumentResolvers\Todo\BaseTodoRequest']
             - addTodoRequest: ['@App\Application\Common\ArgumentResolvers\Todo\MediaTodoRequest']
+
+    request.denormalizer:
+        class: Symfony\Component\Serializer\SerializerInterface
+        factory: ['App\Application\Factories\DenormalizerFactory', 'create']

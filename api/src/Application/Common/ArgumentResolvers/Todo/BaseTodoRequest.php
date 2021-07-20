@@ -27,7 +27,7 @@ class BaseTodoRequest extends AbstractValidationRequest implements TodoRequestIn
         SerializerInterface $serializer
     ) {
         $this->serializer = $serializer;
-        parent::__construct($validator, $requestStack);
+        parent::__construct($validator, $requestStack->getCurrentRequest());
     }
 
     public function supports(string $type): bool

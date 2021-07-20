@@ -4,7 +4,6 @@ namespace App\Application\Common\ArgumentResolvers\Todo;
 
 use App\Application\Common\ArgumentResolvers\Validation\AbstractValidationRequest;
 use App\Domain\Entity\MediaTodo;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,7 +13,7 @@ class MediaTodoRequest extends AbstractValidationRequest implements TodoRequestI
 {
     public function __construct(ValidatorInterface $validator, RequestStack $requestStack)
     {
-        parent::__construct($validator, $requestStack);
+        parent::__construct($validator, $requestStack->getCurrentRequest());
     }
 
     public function supports(string $type): bool
