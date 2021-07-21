@@ -10,3 +10,4 @@ steps:
       - cp .env.example .env
       - docker-compose -v
       - ls
+      - docker-compose up --build
