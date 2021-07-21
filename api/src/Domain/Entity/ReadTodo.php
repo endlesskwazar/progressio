@@ -31,6 +31,8 @@ class ReadTodo extends LearningMaterialTodo
      */
     private ?int $page;
 
+    private string $type = self::READ_TYPE;
+
     public function __construct(
         string $title,
         ?string $description = null,
@@ -77,9 +79,9 @@ class ReadTodo extends LearningMaterialTodo
         $this->page = $page;
     }
 
-    public static function getType(): string
+    public  function getType(): string
     {
-        return self::READ_TYPE;
+        return $this->type;
     }
 
     public function getProgress(): ?float

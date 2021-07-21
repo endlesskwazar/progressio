@@ -11,6 +11,6 @@ interface TodoInterface extends EntityInterface
     public const MEDIA_TYPE = "media";
     public const COURSE_TYPE = "course";
 
-    public static function getType(): string;
+    public function getType(): string;
     public function setUser(UserInterface $user);
 }

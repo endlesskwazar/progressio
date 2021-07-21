@@ -55,6 +55,8 @@ class BaseTodo implements TodoInterface
      */
     private UserInterface $user;
 
+    private string $type = TodoInterface::BASE_TYPE;
+
     public function __construct(string $title, ?string $description = null, ?DateTimeImmutable $due = null)
     {
         $this->title = $title;
@@ -126,9 +128,9 @@ class BaseTodo implements TodoInterface
         $this->due = $due;
     }
 
-    public static function getType(): string
+    public function getType(): string
     {
-        return self::BASE_TYPE;
+        return $this->type;
     }
 
     public function setUser(UserInterface $user)

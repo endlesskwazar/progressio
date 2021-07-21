@@ -60,6 +60,9 @@
         "post-install-cmd": [
             "@auto-scripts"
         ],
+        "psalm": [
+            "php vendor/bin/psalm"
+        ],
         "test": [
             "php vendor/bin/codecept run"
         ],

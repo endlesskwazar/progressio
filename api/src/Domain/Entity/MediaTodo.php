@@ -31,6 +31,8 @@ class MediaTodo extends LearningMaterialTodo
      */
     private ?string $pause;
 
+    private string $type = self::MEDIA_TYPE;
+
     public function __construct(
         string $title,
         ?string $description = null,
@@ -77,9 +79,9 @@ class MediaTodo extends LearningMaterialTodo
         $this->pause = $pause;
     }
 
-    public static function getType(): string
+    public function getType(): string
     {
-        return self::MEDIA_TYPE;
+        return $this->type;
     }
 
     public function getProgress(): ?float

@@ -71,3 +71,13 @@ And apply migrations using:
 ```bash
 docker-compose exec php php bin/console doctrine:migrations:migrate
 ```
+
+# Linting
+
+Application uses PHP_CodeSniffer and psalm to statically analyse code.
+
+To run psalm execute:
+
+```bash
+docker-compose exec php composer psalm
+```

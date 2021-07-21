@@ -63,6 +63,8 @@ class CourseTodo extends LearningMaterialTodo
         $this->step = $step;
     }
 
+    private string $type = self::COURSE_TYPE;
+
     public function __construct(
         string $title,
         ?string $description = null,
@@ -77,9 +79,9 @@ class CourseTodo extends LearningMaterialTodo
         $this->step = $step;
     }
 
-    public static function getType(): string
+    public function getType(): string
     {
-        return self::COURSE_TYPE;
+        return $this->type;
     }
 
     public function getProgress(): ?float

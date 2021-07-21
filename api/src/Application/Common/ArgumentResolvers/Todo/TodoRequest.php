@@ -24,6 +24,13 @@ class TodoRequest
 
         foreach ($this->todoRequests as $todoRequest) {
             if ($todoRequest->supports($type)) {
+
+                $violations = $todoRequest->validate();
+
+                if (0 !== count($violations)) {
+                    throw new Exception("Violations");
+                }
+
                 $todo = $todoRequest->getEntityInstance();
             }
         }
