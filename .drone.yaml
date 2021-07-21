@@ -11,3 +11,8 @@ steps:
       - docker-compose -v
       - ls
       - docker-compose up --build
+
+volumes:
+  - name: docker_sock
+    host:
+      path: /var/run/docker.sock
