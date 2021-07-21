@@ -9,3 +9,4 @@ steps:
       - echo $DOCKER_HOST
       - cp .env.example .env
       - docker-compose -v
+      - ls
